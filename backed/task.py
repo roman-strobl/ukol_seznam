@@ -35,18 +35,22 @@ def get_json_data(url: str) -> dict:
 
     return response
 
+
 def start_downloader():
-    data = get_json_data("https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json")
+    data = get_json_data(setting.get("url"))
 
+    if data == {}:
+        threading.Timer(setting.get("time"), start_downloader).start()
+        return
 
-    print(f"Nastavení pro stáhování je {setting}")
+    # print(f"Nastavení pro stáhování je {setting}")
     for movie in data:
         try:
             movieDB = Movie.objects.get(name=movie.get("name"))
         except ObjectDoesNotExist:
             print("Přidání nového filmu do databáze")
         else:
-            print("V databázi už existuje tento objekt")
+            # print("V databázi už existuje tento objekt")
             continue
 
         features = movie.get("features")
@@ -61,14 +65,14 @@ def start_downloader():
             try:
                 featureDB = Features.objects.get(name=feature)
             except ObjectDoesNotExist:
-                print("Feature neexistuje, přidává se do dazabáze")
+                print("Feature neexistuje, přidává se do databáze")
                 featureDB = Features(name=feature)
                 featureDB.save()
 
             featureDB.movies.add(movieDB)
             featureDB.save()
 
-threading.Timer(10, start_downloader).start()
+    threading.Timer(setting.get("time"), start_downloader).start()
 
 
 

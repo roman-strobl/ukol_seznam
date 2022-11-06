@@ -3,5 +3,12 @@
 {% block title %}Movies{% endblock %}
 
 {% block content %}
-    
+    <div class="flex-container">
+    {% for movie in movies %}
+        <div>
+         {{ movie.name }}
+         <img src={{ movie.iconUri }} alt="lol">
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}
