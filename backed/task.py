@@ -5,6 +5,9 @@ import requests
 
 from backed.models import Features, Movie
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
+
+setting = getattr(settings, "API_DOWNLOADER", {"url": None, "time": 0})
 
 def get_json_data(url: str) -> dict:
     """
@@ -32,11 +35,20 @@ def get_json_data(url: str) -> dict:
 
     return response
 
-
-def main():
+def start_downloader():
     data = get_json_data("https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json")
 
+
+    print(f"Nastavení pro stáhování je {setting}")
     for movie in data:
+        try:
+            movieDB = Movie.objects.get(name=movie.get("name"))
+        except ObjectDoesNotExist:
+            print("Přidání nového filmu do databáze")
+        else:
+            print("V databázi už existuje tento objekt")
+            continue
+
         features = movie.get("features")
         movieDB = Movie(name=movie.get("name"),
                         shortName=movie.get("shortName"),
@@ -56,10 +68,7 @@ def main():
             featureDB.movies.add(movieDB)
             featureDB.save()
 
-
-
-
-
+threading.Timer(10, start_downloader).start()
 
 
 

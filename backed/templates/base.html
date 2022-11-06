@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+     <script src="{% static 'js/navbar.js' %}"></script>
+
+
+</head>
+<body>
+    <div class="navbar" id="menu">
+		<ul>
+            <li><a href="/list">Home page</a></li>
+            <li style="float: right; background-color:#cb0101"><a href="/admin">Admin</a></li>
+        </ul>
+	</div>
+    <div class="content">{% block content %}{% endblock %}</div>
+</body>
+</html>
