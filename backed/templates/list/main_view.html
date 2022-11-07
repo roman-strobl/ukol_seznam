@@ -7,10 +7,13 @@
     <form method='post'>
         {% csrf_token %}
         {{ form.as_p }}
-        <input type='submit' value='Filtrovat'>
+        <input type='submit' value='Filter'>
     </form>
     </div>
     <div class="flex-container">
+    {% if not movies %}
+    <h2>Sorry, nothing's here</h2>
+    {% endif %}
     {% for movie in movies %}
         <div>
          {{ movie.name }}

@@ -30,13 +30,17 @@ def get_json_data(url: str) -> dict:
     try:
         response = r.json()
     except requests.exceptions.JSONDecodeError:
-        print("Odpověď není ve formátu JSON")
+        print("The response is not in JSON format")
         return {}
 
     return response
 
 
 def start_downloader():
+    """
+    Funkce pro zapnutí automatického stahování z API.
+    URL adresa a čas periody se nastavuje v django.settings.
+    """
     data = get_json_data(setting.get("url"))
 
     if data == {}:

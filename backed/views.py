@@ -21,6 +21,8 @@ def index(request):
                 movies = Movie.objects.filter(features__id = features_api[0])
                 for x in range(1,len(features_api)):
                     movies = movies.filter(features__id = features_api[x]) 
+                    if not movies:
+                        break
     else:
         form = FeatureForm
         movies = Movie.objects.all()

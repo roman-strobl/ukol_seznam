@@ -13,6 +13,6 @@ class FeatureForm(forms.Form):
         _, name = feature.name.split("_",1)
         OPTIONS.append((feature.id,name))
 
-    print(OPTIONS)
+    #print(OPTIONS)
 
     Features = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=OPTIONS,required=False)
