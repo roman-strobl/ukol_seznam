@@ -38,9 +38,13 @@ body {
 .content {
   padding:20px;
   margin-top:30px;
+  display: grid;
+  grid-template-areas:
+  'sidebar panel panel panel panel'
 }
 
 .flex-container {
+  grid-area: panel;
   display: flex;
   flex-wrap: wrap;
   /*background-color: DodgerBlue;*/
@@ -53,4 +57,15 @@ body {
   text-align: center;
   line-height: 75px;
   font-size: 12px;
+}
+
+.sidenav {
+  grid-area: sidebar;
+  height: 100%;
+  width: 250px;
+  top: 0;
+  left: 0;
+  background-color: rgb(255, 255, 255);
+  overflow-x: hidden;
+  padding-top: 20px;
 }

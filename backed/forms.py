@@ -9,7 +9,7 @@ class FeatureForm(forms.Form):
     OPTIONS = list()
 
     for feature in Features_db:
-        
+        #vytvoření listu pro Formulář (<ID>, jméno)
         _, name = feature.name.split("_",1)
         OPTIONS.append((feature.id,name))
 
